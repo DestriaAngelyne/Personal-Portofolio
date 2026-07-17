@@ -14,116 +14,145 @@
         }
         body {
             font-family: 'DejaVu Sans', sans-serif;
-            font-size: 11px;
-            color: #1a1a1a;
+            font-size: 13px;
+            color: #2b2b2b;
+            line-height: 1.5;
         }
         table.layout {
             width: 100%;
             border-collapse: collapse;
         }
         td.sidebar {
-            width: 35%;
+            width: 34%;
             background-color: #0d2a4d;
             color: #ffffff;
-            padding: 30px 20px;
+            padding: 45px 28px;
             vertical-align: top;
         }
         td.main {
-            width: 65%;
-            padding: 40px 30px;
+            width: 66%;
+            padding: 55px 45px;
             vertical-align: top;
         }
 
-        /* Sidebar */
+        /* ===== Sidebar ===== */
         .photo-wrap {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 35px;
         }
         .photo-wrap img {
-            width: 120px;
-            height: 120px;
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
             border: 4px solid #ffffff;
+        }
+        .sidebar-section {
+            margin-bottom: 32px;
         }
         .sidebar h2 {
             font-size: 14px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-            margin-top: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.3);
-            padding-bottom: 6px;
+            letter-spacing: 1.5px;
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 1.5px solid rgba(255,255,255,0.35);
         }
         .sidebar p {
-            margin-bottom: 8px;
-            line-height: 1.5;
+            margin-bottom: 10px;
+            line-height: 1.6;
+            font-size: 12.5px;
         }
         .edu-item {
-            margin-bottom: 14px;
+            margin-bottom: 18px;
         }
         .edu-period {
-            font-size: 10px;
-            opacity: 0.85;
+            font-size: 11px;
+            opacity: 0.8;
+            margin-bottom: 2px;
         }
         .edu-school {
             font-weight: bold;
+            font-size: 13px;
+            margin-bottom: 2px;
+        }
+        .edu-major {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        .skill-category {
+            font-size: 12.5px;
+            font-weight: bold;
+            margin-top: 14px;
+            margin-bottom: 8px;
+            text-transform: capitalize;
+            color: #ffffff;
+        }
+        .skill-category:first-child {
+            margin-top: 0;
         }
         .skill-list {
             list-style: none;
         }
         .skill-list li {
-            margin-bottom: 6px;
-            padding-left: 12px;
+            margin-bottom: 7px;
+            padding-left: 14px;
             position: relative;
+            font-size: 12px;
         }
         .skill-list li:before {
             content: "•";
             position: absolute;
             left: 0;
         }
-        .skill-category {
-            font-size: 11px;
-            font-weight: bold;
-            margin-top: 10px;
-            margin-bottom: 4px;
-        }
 
-        /* Main content */
+        /* ===== Main content ===== */
         .name {
-            font-size: 26px;
+            font-size: 32px;
             font-weight: bold;
             color: #0d2a4d;
-            line-height: 1.2;
+            line-height: 1.15;
+            letter-spacing: 0.5px;
         }
         .major {
-            font-size: 12px;
-            letter-spacing: 2px;
+            font-size: 13px;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            color: #333;
-            margin-top: 6px;
-            margin-bottom: 25px;
+            color: #555555;
+            margin-top: 10px;
+            margin-bottom: 40px;
+        }
+        .main-section {
+            margin-bottom: 36px;
         }
         .main h2 {
-            font-size: 16px;
+            font-size: 18px;
             color: #0d2a4d;
-            margin-bottom: 10px;
-            margin-top: 20px;
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #0d2a4d;
         }
         .main p.summary {
-            line-height: 1.6;
+            line-height: 1.8;
             text-align: justify;
+            font-size: 13px;
+            color: #333333;
         }
         .project-item {
-            margin-bottom: 16px;
+            margin-bottom: 22px;
+        }
+        .project-item:last-child {
+            margin-bottom: 0;
         }
         .project-title {
             font-weight: bold;
             color: #0d2a4d;
-            font-size: 12px;
-            margin-bottom: 4px;
+            font-size: 14.5px;
+            margin-bottom: 6px;
         }
         .project-desc {
-            line-height: 1.5;
+            line-height: 1.7;
+            font-size: 13px;
+            color: #333333;
         }
     </style>
 </head>
@@ -137,47 +166,57 @@
                     </div>
                 @endif
 
-                <h2>Kontak</h2>
-                <p>{{ $profile->phone ?? '-' }}</p>
-                <p>{{ $profile->email ?? '-' }}</p>
-                <p>{{ $profile->location ?? '-' }}</p>
+                <div class="sidebar-section">
+                    <h2>Kontak</h2>
+                    <p>{{ $profile->phone ?? '-' }}</p>
+                    <p>{{ $profile->email ?? '-' }}</p>
+                    <p>{{ $profile->location ?? '-' }}</p>
+                </div>
 
-                <h2>Pendidikan</h2>
-                @foreach($educations as $edu)
-                    <div class="edu-item">
-                        <div class="edu-period">{{ $edu->period }}</div>
-                        <div class="edu-school">{{ $edu->school }}</div>
-                        @if($edu->major)
-                            <div>{{ $edu->major }}</div>
-                        @endif
-                    </div>
-                @endforeach
+                <div class="sidebar-section">
+                    <h2>Pendidikan</h2>
+                    @foreach($educations as $edu)
+                        <div class="edu-item">
+                            <div class="edu-period">{{ $edu->period }}</div>
+                            <div class="edu-school">{{ $edu->school }}</div>
+                            @if($edu->major)
+                                <div class="edu-major">{{ $edu->major }}</div>
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
 
-                <h2>Skill</h2>
-                @foreach($technologies as $category => $techs)
-                    <div class="skill-category">{{ $category }}</div>
-                    <ul class="skill-list">
-                        @foreach($techs as $tech)
-                            <li>{{ $tech->name }}</li>
-                        @endforeach
-                    </ul>
-                @endforeach
+                <div class="sidebar-section">
+                    <h2>Skill</h2>
+                    @foreach($technologies as $category => $techs)
+                        <div class="skill-category">{{ $category }}</div>
+                        <ul class="skill-list">
+                            @foreach($techs as $tech)
+                                <li>{{ $tech->name }}</li>
+                            @endforeach
+                        </ul>
+                    @endforeach
+                </div>
             </td>
 
             <td class="main">
                 <div class="name">{{ strtoupper($profile->name ?? '') }}</div>
                 <div class="major">{{ $profile->major ?? '' }}</div>
 
-                <h2>Profil</h2>
-                <p class="summary">{{ $profile->summary ?? '' }}</p>
+                <div class="main-section">
+                    <h2>Profil</h2>
+                    <p class="summary">{{ $profile->summary ?? '' }}</p>
+                </div>
 
-                <h2>Portofolio Proyek</h2>
-                @foreach($projects as $project)
-                    <div class="project-item">
-                        <div class="project-title">{{ $project->title }}</div>
-                        <div class="project-desc">{{ $project->description }}</div>
-                    </div>
-                @endforeach
+                <div class="main-section">
+                    <h2>Portofolio Proyek</h2>
+                    @foreach($projects as $project)
+                        <div class="project-item">
+                            <div class="project-title">{{ $project->title }}</div>
+                            <div class="project-desc">{{ $project->description }}</div>
+                        </div>
+                    @endforeach
+                </div>
             </td>
         </tr>
     </table>
