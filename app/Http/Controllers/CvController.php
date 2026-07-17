@@ -53,11 +53,17 @@ class CvController extends Controller
         }
 
         $imageData = Storage::disk('public')->get($profile->photo_path);
+
+        // Kalau ekstensi GD tidak tersedia, pakai gambar asli tanpa resize
+        if (!extension_loaded('gd')) {
+            $mimeType = Storage::disk('public')->mimeType($profile->photo_path) ?: 'image/jpeg';
+            return 'data:' . $mimeType . ';base64,' . base64_encode($imageData);
+        }
+
         $sourceImage = @imagecreatefromstring($imageData);
 
         if (!$sourceImage) {
-            // Fallback: kalau gagal diproses GD, pakai gambar asli apa adanya
-            $mimeType = Storage::disk('public')->mimeType($profile->photo_path);
+            $mimeType = Storage::disk('public')->mimeType($profile->photo_path) ?: 'image/jpeg';
             return 'data:' . $mimeType . ';base64,' . base64_encode($imageData);
         }
 
