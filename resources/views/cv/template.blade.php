@@ -30,20 +30,20 @@
             height: 1123px;
             background-color: #0d2a4d;
             color: #ffffff;
-            padding: 40px 22px;
+            padding: 50px 24px;
         }
         .main {
             position: absolute;
             top: 0;
             left: 270px;
             width: 483px;
-            padding: 50px 0;
+            padding: 50px 4px;
         }
 
         /* ===== Sidebar ===== */
         .photo-wrap {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 34px;
         }
         .photo-wrap img {
             width: 120px;
@@ -52,28 +52,28 @@
             border: 4px solid #ffffff;
         }
         .sidebar-section {
-            margin-bottom: 28px;
+            margin-bottom: 30px;
         }
         .sidebar h2 {
             font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            margin-bottom: 12px;
-            padding-bottom: 6px;
+            margin-bottom: 14px;
+            padding-bottom: 7px;
             border-bottom: 1.5px solid rgba(255,255,255,0.35);
         }
         .sidebar p {
-            margin-bottom: 8px;
-            line-height: 1.5;
+            margin-bottom: 9px;
+            line-height: 1.6;
             font-size: 12px;
         }
         .edu-item {
-            margin-bottom: 14px;
+            margin-bottom: 16px;
         }
         .edu-period {
             font-size: 10.5px;
             opacity: 0.8;
-            margin-bottom: 2px;
+            margin-bottom: 3px;
         }
         .edu-school {
             font-weight: bold;
@@ -87,9 +87,10 @@
         .skill-category {
             font-size: 12px;
             font-weight: bold;
-            margin-top: 12px;
-            margin-bottom: 6px;
+            margin-top: 14px;
+            margin-bottom: 7px;
             color: #ffffff;
+            text-transform: capitalize;
         }
         .skill-category:first-child {
             margin-top: 0;
@@ -98,8 +99,9 @@
             list-style: none;
         }
         .skill-list li {
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             font-size: 11.5px;
+            line-height: 1.4;
         }
 
         /* ===== Main content ===== */
@@ -107,7 +109,7 @@
             font-size: 28px;
             font-weight: bold;
             color: #0d2a4d;
-            line-height: 1.15;
+            line-height: 1.2;
         }
         .major {
             font-size: 12px;
@@ -115,26 +117,26 @@
             text-transform: uppercase;
             color: #555555;
             margin-top: 8px;
-            margin-bottom: 32px;
+            margin-bottom: 36px;
         }
         .main-section {
-            margin-bottom: 28px;
+            margin-bottom: 32px;
         }
         .main h2 {
             font-size: 16px;
             color: #0d2a4d;
-            margin-bottom: 12px;
-            padding-bottom: 6px;
+            margin-bottom: 14px;
+            padding-bottom: 7px;
             border-bottom: 2px solid #0d2a4d;
         }
         .main p.summary {
-            line-height: 1.7;
+            line-height: 1.8;
             text-align: justify;
             font-size: 12.5px;
             color: #333333;
         }
         .project-item {
-            margin-bottom: 18px;
+            margin-bottom: 22px;
         }
         .project-item:last-child {
             margin-bottom: 0;
@@ -142,11 +144,11 @@
         .project-title {
             font-weight: bold;
             color: #0d2a4d;
-            font-size: 13.5px;
-            margin-bottom: 5px;
+            font-size: 14px;
+            margin-bottom: 6px;
         }
         .project-desc {
-            line-height: 1.6;
+            line-height: 1.7;
             font-size: 12.5px;
             color: #333333;
         }
