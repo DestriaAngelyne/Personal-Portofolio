@@ -154,11 +154,13 @@
     <table class="layout">
         <tr>
             <td class="sidebar">
+                {{--
                 @if($photoBase64)
                     <div class="photo-wrap">
                         <img src="{{ $photoBase64 }}" alt="Foto Profil">
                     </div>
                 @endif
+                --}}
 
                 <div class="sidebar-section">
                     <h2>Kontak</h2>
