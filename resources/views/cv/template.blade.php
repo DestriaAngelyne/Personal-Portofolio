@@ -10,28 +10,28 @@
         * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
         body {
             font-family: 'DejaVu Sans', sans-serif;
             font-size: 13px;
             color: #2b2b2b;
             line-height: 1.5;
+            width: 793px;
         }
         table.layout {
-            width: 100%;
+            width: 793px;
             border-collapse: collapse;
         }
         td.sidebar {
-            width: 34%;
+            width: 270px;
             background-color: #0d2a4d;
             color: #ffffff;
-            padding: 45px 28px;
+            padding: 45px 25px;
             vertical-align: top;
         }
         td.main {
-            width: 66%;
-            padding: 55px 45px;
+            width: 493px;
+            padding: 55px 40px;
             vertical-align: top;
         }
 
@@ -96,13 +96,7 @@
         .skill-list li {
             margin-bottom: 7px;
             padding-left: 14px;
-            position: relative;
             font-size: 12px;
-        }
-        .skill-list li:before {
-            content: "•";
-            position: absolute;
-            left: 0;
         }
 
         /* ===== Main content ===== */
@@ -192,7 +186,7 @@
                         <div class="skill-category">{{ $category }}</div>
                         <ul class="skill-list">
                             @foreach($techs as $tech)
-                                <li>{{ $tech->name }}</li>
+                                <li>&bull; {{ $tech->name }}</li>
                             @endforeach
                         </ul>
                     @endforeach
