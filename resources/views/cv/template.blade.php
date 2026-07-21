@@ -70,6 +70,9 @@
         .edu-item {
             margin-bottom: 16px;
         }
+        .edu-item:last-child {
+            margin-bottom: 0;
+        }
         .edu-period {
             font-size: 10.5px;
             opacity: 0.8;
@@ -121,6 +124,9 @@
         }
         .main-section {
             margin-bottom: 32px;
+        }
+        .main-section:last-child {
+            margin-bottom: 0;
         }
         .main h2 {
             font-size: 16px;
