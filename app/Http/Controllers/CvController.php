@@ -42,11 +42,18 @@ class CvController extends Controller
     }
 
     /**
-     * Resize foto profil ke ukuran kecil (max 300x300) sebelum di-convert
-     * ke base64. Ini penting untuk mencegah bug dompdf yang menghasilkan
-     * halaman kosong ekstra ketika gambar sumber beresolusi besar.
+     * Crop foto profil jadi persegi (1:1) dengan GD sebelum di-resize dan
+     * dikonversi ke base64. Ini menggantikan versi lama yang cuma resize
+     * proporsional (preserve aspect ratio) tanpa pernah crop ke persegi --
+     * itu sebabnya dulu fotonya selalu geser saat dipaksa masuk lingkaran
+     * di CSS (dompdf tidak crop-to-square dengan benar via object-fit).
+     *
+     * $verticalBias: 0.5 = crop benar-benar di tengah (default, paling
+     * aman/generik untuk berbagai jenis foto). Ubah ke 0.35-0.4 HANYA
+     * kalau kamu sudah cek beberapa sample foto dan memang konsisten
+     * wajah agak ke atas -- ini heuristik, bukan face detection asli.
      */
-    private function getResizedPhotoBase64(?Profile $profile): ?string
+    private function getResizedPhotoBase64(?Profile $profile, float $verticalBias = 0.5): ?string
     {
         if (!$profile || !$profile->photo_path || !Storage::disk('public')->exists($profile->photo_path)) {
             return null;
@@ -54,7 +61,6 @@ class CvController extends Controller
 
         $imageData = Storage::disk('public')->get($profile->photo_path);
 
-        // Kalau ekstensi GD tidak tersedia, pakai gambar asli tanpa resize
         if (!extension_loaded('gd')) {
             $mimeType = Storage::disk('public')->mimeType($profile->photo_path) ?: 'image/jpeg';
             return 'data:' . $mimeType . ';base64,' . base64_encode($imageData);
@@ -67,22 +73,38 @@ class CvController extends Controller
             return 'data:' . $mimeType . ';base64,' . base64_encode($imageData);
         }
 
-        $maxSize = 300;
         $origWidth = imagesx($sourceImage);
         $origHeight = imagesy($sourceImage);
 
-        $ratio = min($maxSize / $origWidth, $maxSize / $origHeight, 1);
-        $newWidth = (int) ($origWidth * $ratio);
-        $newHeight = (int) ($origHeight * $ratio);
+        // 1. Sisi persegi terbesar yang muat di dalam gambar sumber
+        $squareSide = min($origWidth, $origHeight);
 
-        $resized = imagecreatetruecolor($newWidth, $newHeight);
-        imagecopyresampled($resized, $sourceImage, 0, 0, 0, 0, $newWidth, $newHeight, $origWidth, $origHeight);
+        // 2. Titik potong: horizontal selalu tengah, vertikal pakai bias
+        $srcX = (int) (($origWidth - $squareSide) / 2);
+        $srcY = (int) (($origHeight - $squareSide) * $verticalBias);
+        $srcY = max(0, min($srcY, $origHeight - $squareSide));
+
+        // 3. Crop ke persegi (masih resolusi asli)
+        $cropped = imagecreatetruecolor($squareSide, $squareSide);
+        imagecopy($cropped, $sourceImage, 0, 0, $srcX, $srcY, $squareSide, $squareSide);
+
+        // 4. Resize persegi itu ke ukuran final (max 300x300)
+        $maxSize = 300;
+        $finalSize = min($maxSize, $squareSide);
+        $resized = imagecreatetruecolor($finalSize, $finalSize);
+        imagecopyresampled(
+            $resized, $cropped,
+            0, 0, 0, 0,
+            $finalSize, $finalSize,
+            $squareSide, $squareSide
+        );
 
         ob_start();
         imagejpeg($resized, null, 85);
         $resizedData = ob_get_clean();
 
         imagedestroy($sourceImage);
+        imagedestroy($cropped);
         imagedestroy($resized);
 
         return 'data:image/jpeg;base64,' . base64_encode($resizedData);
